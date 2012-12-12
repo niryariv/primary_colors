@@ -31,9 +31,9 @@
 			).addTo(map);
 		}
 
-		function addMarker(coords, score) {
-			L.marker(coords).addTo(map)
-							.bindPopup(score + ' : ' + 'ציון ')
+		function addMarker(city) {
+			L.marker(city.coords).addTo(map)
+							.bindPopup(city.score + ' : ' + 'ציון ' + city.name)
 							.on({
 									'mouseover': function() { this.openPopup(); }
 								});
@@ -43,7 +43,7 @@
 			initMap();	
 			
 			for (var i in data) {
-				addMarker(data[i].coords, data[i].score);
+				addMarker(data[i]);
 			}
 
 		});
