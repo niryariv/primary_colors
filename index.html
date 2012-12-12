@@ -13,15 +13,33 @@
 		 }
 	</style>
 
+	<script type="text/javascript" src="data.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			var map = L.map('map').setView([31.78, 35.2], 8);
 
-			L.tileLayer('http://{s}.tile.cloudmade.com/e4910e4f5be44f368ff0ac65fdf528ba/997/256/{z}/{x}/{y}.png'
-					,{
-						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-						,maxZoom: 18
-					}).addTo(map);
+		var map;
+		var defaultCenter = [31.78, 35.2];
+
+		function initMap() {
+			map = L.map('map').setView(defaultCenter, 8);
+			L.tileLayer(
+				'http://{s}.tile.cloudmade.com/e4910e4f5be44f368ff0ac65fdf528ba/997/256/{z}/{x}/{y}.png',
+				{
+					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+					,maxZoom: 18
+				}
+			).addTo(map);
+		}
+
+		function addMarker(coords, score) {
+			L.marker(coords).addTo(map).bindPopup(score + ' : ' + 'ציון ').openPopup();
+		}
+
+		$(document).ready(function() {
+			initMap();	
+			
+			for (var i in data) {
+				addMarker(data[i].coords, data[i].score);
+			}
 
 		});
 	</script>
