@@ -32,7 +32,11 @@
 		}
 
 		function addMarker(coords, score) {
-			L.marker(coords).addTo(map).bindPopup(score + ' : ' + 'ציון ').openPopup();
+			L.marker(coords).addTo(map)
+							.bindPopup(score + ' : ' + 'ציון ')
+							.on({
+									'mouseover': function() { this.openPopup(); }
+								});
 		}
 
 		$(document).ready(function() {
