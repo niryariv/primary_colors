@@ -8,10 +8,14 @@
 	<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
 	
 	<style type="text/css">
-		#map { 
-			height: 100%;
-			width: 80%;
-		 }
+		body {
+		    padding: 0;
+		    margin: 0;
+		}
+		
+		html, body, #map {
+		    height: 100%;
+		}
 
 		 .info {
 		    padding: 6px 8px;
@@ -40,7 +44,7 @@
 	<script type="text/javascript">
 
 		var map;
-		var defaultCenter = [31.78, 35.2];
+		var defaultCenter = [31.78, 35.2]; // jerusalem
 		var pg;
 		var info;
 
@@ -49,7 +53,7 @@
 			L.tileLayer(
 				'http://{s}.tile.cloudmade.com/e4910e4f5be44f368ff0ac65fdf528ba/{styleId}/256/{z}/{x}/{y}.png',
 				{
-					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> איסוף מידע ע"י <a href="http://www.ti-israel.org/">שבי"ל</a>',
 					maxZoom: 18,
 					styleId: 998
 				}
@@ -89,6 +93,15 @@
 			info.onAdd = function (map) {
 	    		this._div = L.DomUtil.create('div', 'info');
 	    		this.update();
+
+	    		this._div.innerHTML = "<h4>Currently supported cities</h4>";
+
+	    		for (var i in data) {
+					this._div.innerHTML += data[i].name + "<br />";
+				}
+
+
+
 	    		return this._div;
 			};
 
