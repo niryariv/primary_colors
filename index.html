@@ -42,12 +42,17 @@
 		}
 
 		function add_outline(city) {
-			L.polygon(coords[city.id], {weight: 2})
-							.addTo(map)
-							.bindPopup(city.score + ' : ' + 'ציון ' + city.name)
-							.on({
-									'mouseover': function() { this.openPopup(); }
-								});
+			L.polygon(
+					coords[city.id], 
+					{
+						weight: 2,
+						fillOpacity: 1 - (city.score / 100)
+					})
+						.addTo(map)
+						.bindPopup(city.score + ' : ' + city.name)
+						.on({
+								'mouseover': function() { this.openPopup(); }
+							});
 
 		}
 
