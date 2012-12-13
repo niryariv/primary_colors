@@ -12,15 +12,37 @@
 			height: 100%;
 			width: 80%;
 		 }
+
+		 .info {
+		    padding: 6px 8px;
+		    font: 14px/16px Arial, Helvetica, sans-serif;
+		    background: white;
+		    background: rgba(255,255,255,0.8);
+		    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		    border-radius: 5px;
+		    text-align: right;
+		}
+		.info h4 {
+		    margin: 0 0 5px;
+		    color: blue;
+		    text-align: center;
+		}
+
+		.low_score {
+			color: red;
+		}
+
 	</style>
 
 	<script type="text/javascript" src="data.js"></script>
+	<script type="text/javascript" src="scores.js"></script>
 	<script type="text/javascript" src="coords.js"></script>
 	<script type="text/javascript">
 
 		var map;
 		var defaultCenter = [31.78, 35.2];
 		var pg;
+		var info;
 
 		function initMap() {
 			map = L.map('map').setView(defaultCenter, 8);
@@ -52,10 +74,52 @@
 						.addTo(map)
 						.bindPopup(city.score + ' : ' + city.name)
 						.on({
-								'mouseover': function() { this.openPopup(); }
+								'mouseover': function() { 
+															this.openPopup(); 
+															// console.log(city);
+															info.update(city);
+														}
 							});
 
 		}
+
+		function add_infobox() {
+			info = L.control();
+
+			info.onAdd = function (map) {
+	    		this._div = L.DomUtil.create('div', 'info');
+	    		this.update();
+	    		return this._div;
+			};
+
+
+			info.update = function (city) {
+				
+				if (typeof city === 'undefined') return;
+
+				output = "<h4>" + city.name + "</h4>";
+				
+				city_attrs = attrs[city.id]
+				for (var i in city_attrs) {
+					name  = city_attrs[i].name;
+					value = city_attrs[i].value;
+					
+					if ( value === null ) continue;
+
+					item = "<b>" + city_attrs[i].name + "</b> " + city_attrs[i].value + "<br />";
+					if (value == 0) {
+						item = '<span class="low_score">' + item + "</span>";
+					}
+
+					output += item;
+				}
+	    		
+	    		this._div.innerHTML = output;
+			};
+
+			info.addTo(map);
+		}
+
 
 		$(document).ready(function() {
 			initMap();	
@@ -63,6 +127,8 @@
 			for (var i in data) {
 				add_outline(data[i]);
 			}
+
+			add_infobox();
 
 		});
 	</script>
