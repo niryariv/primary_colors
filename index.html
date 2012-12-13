@@ -14,10 +14,12 @@
 	</style>
 
 	<script type="text/javascript" src="data.js"></script>
+	<script type="text/javascript" src="coords.js"></script>
 	<script type="text/javascript">
 
 		var map;
 		var defaultCenter = [31.78, 35.2];
+		var pg;
 
 		function initMap() {
 			map = L.map('map').setView(defaultCenter, 8);
@@ -39,11 +41,21 @@
 								});
 		}
 
+		function add_outline(city) {
+			L.polygon(coords[city.id], {weight: 2})
+							.addTo(map)
+							.bindPopup(city.score + ' : ' + 'ציון ' + city.name)
+							.on({
+									'mouseover': function() { this.openPopup(); }
+								});
+
+		}
+
 		$(document).ready(function() {
 			initMap();	
 			
 			for (var i in data) {
-				addMarker(data[i]);
+				add_outline(data[i]);
 			}
 
 		});
