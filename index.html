@@ -48,6 +48,13 @@
 		var pg;
 		var info;
 
+		function cityColors(score) {
+			return	score > 80 ? 'green' :
+           			score > 65 ? 'blue'  :
+           			score > 50 ? 'yellow':
+           			'red';
+		}
+
 		function initMap() {
 			map = L.map('map').setView(defaultCenter, 8);
 			L.tileLayer(
@@ -73,7 +80,8 @@
 					coords[city.id], 
 					{
 						weight: 1,
-						fillOpacity: 1 - (city.score / 100)
+						fillOpacity: 1 - (city.score / 200),
+						fillColor: cityColors(city.score)
 					})
 						.addTo(map)
 						.bindPopup(city.score + ' : ' + city.name)
@@ -94,7 +102,7 @@
 	    		this._div = L.DomUtil.create('div', 'info');
 	    		this.update();
 
-	    		this._div.innerHTML = "<h4>Currently supported cities</h4>";
+	    		this._div.innerHTML = "<h4>זוהי דוגמא, שכוללת את הערים</h4>";
 
 	    		for (var i in data) {
 					this._div.innerHTML += data[i].name + "<br />";
