@@ -48,17 +48,20 @@
 		var pg;
 		var info;
 
+		var cityPallette = ['#134D65', '#479CA3', '#FAFFAD', '#F8DE0D', '#B62E1E'];
+
 		function cityColors(score) {
-			return	score > 90 ? 'green' :
-           			score > 70 ? 'blue'  :
-           			score > 50 ? 'yellow':
-           			'red';
+			return	score > 90 ? cityPallette[0]:
+           			score > 80 ? cityPallette[1]:
+           			score > 70 ? cityPallette[2]:
+           			score > 60 ? cityPallette[3]:
+           			cityPallette[4];
 		}
 
 		function initMap() {
 			map = L.map('map').setView(defaultCenter, 8);
 			L.tileLayer(
-				'http://{s}.tile.cloudmade.com/e4910e4f5be44f368ff0ac65fdf528ba/{styleId}/256/{z}/{x}/{y}.png',
+				'http://{s}.tile.cloudmade.com/e4910e4f5be44f368ff0ac65fdf528ba/{styleId}/256/{z}/{x}/{y}.png', 
 				{
 					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a> איסוף מידע ע"י <a href="http://www.ti-israel.org/">שבי"ל</a>',
 					maxZoom: 18,
